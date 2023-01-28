@@ -18,12 +18,14 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
