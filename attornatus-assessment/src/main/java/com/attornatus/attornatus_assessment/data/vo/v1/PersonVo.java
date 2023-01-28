@@ -1,8 +1,7 @@
 package com.attornatus.attornatus_assessment.data.vo.v1;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -31,8 +30,8 @@ public class PersonVo extends RepresentationModel<PersonVo> implements Serializa
 
 	private String cpf;
 	@JsonProperty(value = "date_birth")
-	private LocalDate dateBirth;
+	private String dateBirth;
 
-	private Set<AddressVo> addresses;
+	private List<AddressVo> addresses;
 	
 }

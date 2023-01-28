@@ -2,7 +2,7 @@ package com.attornatus.attornatus_assessment.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -45,6 +45,6 @@ public class Person implements Serializable {
     @JoinTable(name = "person_address",
     joinColumns = @JoinColumn(name = "person_fk"),
     inverseJoinColumns = @JoinColumn(name = "address_fk"))
-	private Set<Address> addresses;
+	private List<Address> addresses;
 	
 }
