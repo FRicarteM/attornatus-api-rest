@@ -21,10 +21,10 @@ public class AddressMapper {
 	}
 	
 	public static List<Address> voToEntityList(List<AddressVo> addresses) {
-		List<Address> address = addresses.stream()
+		List<Address> addressList = addresses.stream()
 				.map(AddressMapper::voToEntity)
 				.collect(Collectors.toList());	
-		return address;
+		return addressList;
 	}
 	
 	public static AddressVo entityToVo(Address address) {
@@ -41,10 +41,10 @@ public class AddressMapper {
 	}
 	
 	public static List<AddressVo> entityToVoList(List<Address> address) {
-		List<AddressVo> enderecosVo = address.stream()
+		List<AddressVo> addressVoList = address.stream()
 				.map(AddressMapper::entityToVo)
 				.collect(Collectors.toList());		
-		return enderecosVo;
+		return addressVoList;
 	}
 	
 }

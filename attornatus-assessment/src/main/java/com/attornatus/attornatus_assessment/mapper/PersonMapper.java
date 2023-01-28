@@ -17,10 +17,9 @@ public class PersonMapper {
     			.dateBirth(LocalDate.parse(personVo.getDateBirth()))
     			.addresses(AddressMapper.voToEntityList(personVo.getAddresses()))
         		.build();
-		
-		return person;
+				return person;
 	}
-	
+
 	public static PersonVo entityToVo(Person person) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		PersonVo personVo = PersonVo.builder()
