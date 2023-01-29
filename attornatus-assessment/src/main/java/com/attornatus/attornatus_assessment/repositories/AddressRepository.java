@@ -8,4 +8,6 @@ import com.attornatus.attornatus_assessment.model.Address;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
+
+	
 }

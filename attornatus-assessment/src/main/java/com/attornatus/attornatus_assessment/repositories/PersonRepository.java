@@ -8,4 +8,6 @@ import com.attornatus.attornatus_assessment.model.Person;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
+	Person findByCpf(String cpf);
+	
 }

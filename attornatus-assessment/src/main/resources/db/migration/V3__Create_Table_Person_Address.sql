@@ -5,3 +5,6 @@ CREATE TABLE person_address (
     FOREIGN KEY (person_fk) REFERENCES person(id),
 	FOREIGN KEY (address_fk) REFERENCES address(id)
 );
+
+ALTER TABLE person_address 
+    DROP CONSTRAINT CONSTRAINT_23F;

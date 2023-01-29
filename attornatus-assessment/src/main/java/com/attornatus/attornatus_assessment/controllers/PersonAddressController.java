@@ -13,37 +13,62 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.attornatus.attornatus_assessment.data.vo.v1.AddressVo;
 import com.attornatus.attornatus_assessment.data.vo.v1.PersonVo;
+import com.attornatus.attornatus_assessment.services.AddressService;
 import com.attornatus.attornatus_assessment.services.PersonService;
 
 @RestController
-@RequestMapping("/api/person/v1")
-public class PersonController {
+@RequestMapping("/api/person-address/v1")
+public class PersonAddressController {
 
 	@Autowired
-	PersonService service;
+	PersonService personService;
+	
+	@Autowired
+	AddressService addressService;
 	
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping
+	@PostMapping("/create")
 	public void create(@RequestBody PersonVo personVo) {
-			service.save(personVo);
+		personService.save(personVo);
+	}
+
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/insert-new-address/{cpf}")
+	public void insertNewAddress(@PathVariable(value = "cpf") String cpf, @RequestBody AddressVo addressVo) {
+		PersonVo person = personService.findByCpf(cpf);
+		person.getAddresses().add(addressService.save(addressVo));
+		personService.save(person);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
-	@GetMapping("/find/{id}")
-	public PersonVo findById(@PathVariable(value = "id") Long id) {
-			return service.findById(id);
+	@GetMapping("/find/{cpf}")
+	public PersonVo findByCpf(@PathVariable(value = "cpf") String cpf) {
+			return personService.findByCpf(cpf);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
-	@GetMapping("/find")
+	@GetMapping("/find-person")
 	public List<PersonVo> findAllPerson() {
-		return service.findAll();
+		return personService.findAll();
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@GetMapping("/find-address")
+	public List<AddressVo> findAllAddress() {
+		return addressService.findAll();
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
-	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable(value = "id") Long id) {
-		service.delete(id);
+	@DeleteMapping("/delete-person/{cpf}")
+	public void deletePerson(@PathVariable(value = "cpf") String cpf) {
+		personService.delete(cpf);
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@DeleteMapping("/delete-address/{id}")
+	public void deleteAddress(@PathVariable(value = "id") Long id) {
+		addressService.delete(id);
 	}
 }

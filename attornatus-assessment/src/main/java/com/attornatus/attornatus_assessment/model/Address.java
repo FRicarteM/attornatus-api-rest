@@ -37,6 +37,7 @@ public class Address implements Serializable {
 	private String city;
 	@Column(name = "main_address", nullable = false)
 	private Boolean mainAddress;
+
 	
 
 }
