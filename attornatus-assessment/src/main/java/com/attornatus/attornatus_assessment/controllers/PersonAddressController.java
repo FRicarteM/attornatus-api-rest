@@ -38,9 +38,7 @@ public class PersonAddressController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/insert-new-address/{cpf}")
 	public void insertNewAddress(@PathVariable(value = "cpf") String cpf, @RequestBody AddressVo addressVo) {
-		PersonVo person = personService.findByCpf(cpf);
-		person.getAddresses().add(addressService.save(addressVo));
-		personService.save(person);
+		personService.insertNewAddress(cpf, addressVo);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
@@ -59,6 +57,12 @@ public class PersonAddressController {
 	@PutMapping("/update-address")
 	public void updateAddress (@RequestBody AddressVo addressVo) {
 		addressService.update(addressVo);
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@PutMapping("/update-main-address/{cpf}/{id}")
+	public void updateMainAddress(@PathVariable(value = "cpf") String cpf, @PathVariable(value = "id") Long id) {
+		personService.enableOrDisableMainAddressByPerson(cpf, id);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
