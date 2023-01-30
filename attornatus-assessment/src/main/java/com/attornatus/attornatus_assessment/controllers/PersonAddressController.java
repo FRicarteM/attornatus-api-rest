@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -43,9 +44,33 @@ public class PersonAddressController {
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
+	@PutMapping("/update-person")
+	public void update (@RequestBody PersonVo personVo) {
+		personService.updatePerson(personVo);
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@PutMapping("/update-person-address")
+	public void updatePersonAddress (@RequestBody PersonVo personVo) {
+			personService.update(personVo);
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@PutMapping("/update-address")
+	public void updateAddress (@RequestBody AddressVo addressVo) {
+		addressService.update(addressVo);
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/find/{cpf}")
 	public PersonVo findByCpf(@PathVariable(value = "cpf") String cpf) {
 			return personService.findByCpf(cpf);
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
+	@GetMapping("/find-main-address/{cpf}")
+	public AddressVo findMainAddressByPerson(@PathVariable(value = "cpf") String cpf) {
+			return personService.findMainAddressByPerson(cpf);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)

@@ -26,6 +26,12 @@ public class AddressService {
 		return AddressMapper.entityToVo(repository.findById(id)
 				.orElseThrow(() -> new NotFoundException("")));
 	}
+
+	public AddressVo findByMainAddress(Long id){
+		log.info("Find a main address");
+		return AddressMapper.entityToVo(
+				repository.findMainAddress(id));
+	}
 	
 	public List<AddressVo> findAll(){
 		log.info("Find Addresses");
@@ -39,6 +45,13 @@ public class AddressService {
 		log.info("Insert a Address");
 		Address address = repository.save(AddressMapper.voToEntity(addressVo));
 		return AddressMapper.entityToVo(address);
+	}
+
+	public void update(AddressVo address) {
+		log.info("Update a Address");
+		repository.update(address.getCep(), address.getStreet(), 
+				address.getNumber(), address.getCity(), address.getMainAddress(), 
+				address.getKey());
 	}
 	
 	public void delete(Long id) {

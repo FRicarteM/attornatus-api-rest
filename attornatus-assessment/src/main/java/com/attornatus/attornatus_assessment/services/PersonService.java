@@ -38,6 +38,18 @@ public class PersonService {
 		return PersonMapper.entityToVo(repository.findByCpf(cpf));
 	}
 	
+	public AddressVo findMainAddressByPerson(String cpf) {
+		log.info("Find a main address for a person");
+		PersonVo person = findByCpf(cpf);
+		List<AddressVo> addresses = person.getAddresses();
+		AddressVo mainAddress = new AddressVo();
+		for(AddressVo address: addresses) {
+			if(address.getMainAddress() == true)
+			mainAddress = service.findByMainAddress(address.getKey());
+		}
+		return mainAddress;
+	}
+	
 	public List<PersonVo> findAll(){
 		log.info("Find People");
 		return repository.findAll()
@@ -58,19 +70,20 @@ public class PersonService {
 		repository.save(person);
 	}
 	
+	public void updatePerson(PersonVo personVo) {
+		log.info("Update a Person");
+		repository.update(personVo.getName(), personVo.getCpf(), 
+				LocalDate.parse(personVo.getDateBirth()), personVo.getKey());
+	}
+
 	public void update(PersonVo personVo) {
 		log.info("Update a Person");
-		Person person = PersonMapper.voToEntity(findByCpf(personVo.getCpf()));
-		person.setName(personVo.getName());
-		person.setCpf(personVo.getCpf());
-		person.setDateBirth(LocalDate.parse(personVo.getDateBirth()));
 		List<AddressVo> addresses = personVo.getAddresses();
 		for(AddressVo vo: addresses) {
-			person.getAddresses()
-			.add(AddressMapper.voToEntity(service.save(vo)));
+			service.update(vo);
 		}
-		repository.save(person);
-		
+		repository.update(personVo.getName(), personVo.getCpf(), 
+				LocalDate.parse(personVo.getDateBirth()), personVo.getKey());
 	}
 
 	public void delete(String cpf) {
