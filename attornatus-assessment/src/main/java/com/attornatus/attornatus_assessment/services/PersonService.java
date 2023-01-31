@@ -1,13 +1,17 @@
 package com.attornatus.attornatus_assessment.services;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
+import com.attornatus.attornatus_assessment.controllers.PersonAddressController;
 import com.attornatus.attornatus_assessment.data.vo.v1.AddressVo;
 import com.attornatus.attornatus_assessment.data.vo.v1.PersonVo;
 import com.attornatus.attornatus_assessment.exceptions.BadRequestException;
@@ -45,6 +49,16 @@ public class PersonService {
 		} catch (BadRequestException bre) {
 			bre = new BadRequestException("Something wrong happened with your request");
 		}
+		
+		person.add(linkTo(methodOn(PersonAddressController.class).findByCpf(cpf)).withSelfRel()
+				.withType("GET-BY").withName("Find By CPF"));
+		person.add(linkTo(methodOn(PersonAddressController.class).findMainAddressByPerson(cpf))
+				.withRel("Get Main Address").withType("GET-BY").withName("Find the Main Address of a Person"));
+		person.add(linkTo(methodOn(PersonAddressController.class).findAllPerson()).withRel("Get all People")
+				.withType("GET-ALL").withName("Find All People"));
+		person.add(linkTo(methodOn(PersonAddressController.class).findAllAddress()).withRel("Get all Address")
+				.withType("GET-ALL").withName("Find Akk Addresses"));
+		
 		return person;
 	}
 	
@@ -62,20 +76,33 @@ public class PersonService {
 			nfe = new NotFoundException("The person isn't found");
 		}
 		
+		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findMainAddressByPerson(cpf)).withSelfRel()
+				.withType("GET-BY").withName("Find the Main Address of a Person"));
+		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findByCpf(cpf)).withRel("Get a Person by CPF")
+				.withType("GET-BY").withName("Find By CPF"));
+		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findAllPerson()).withRel("Get all People")
+				.withType("GET-ALL").withName("Find All People"));
+		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findAllAddress()).withRel("Get all Address")
+				.withType("GET-ALL").withName("Find Akk Addresses"));
+		
 		return mainAddress;
 	}
 	
-	public List<PersonVo> findAll() {
+	public CollectionModel<PersonVo> findAll() {
 		log.info("Find People");
-		List<PersonVo> people = new ArrayList<>(); 
+		CollectionModel<PersonVo> people = null; 
 		try {
-			people = repository.findAll()
+			people = CollectionModel.of((repository.findAll()
 				.stream()
-				.map(PersonMapper::entityToVo)
-				.collect(Collectors.toList());
+				.map(PersonMapper::entityToVoWithHateoas)
+				.collect(Collectors.toList())));
 		} catch (BadRequestException bre) {
 			bre = new BadRequestException("Something wrong happened with your request");
-		}
+		}		
+		
+		people.add(linkTo(methodOn(PersonAddressController.class).findAllPerson()).withSelfRel()
+				.withType("GET-ALL").withName("Find All People"));
+		
 		return people;
 	}
 	

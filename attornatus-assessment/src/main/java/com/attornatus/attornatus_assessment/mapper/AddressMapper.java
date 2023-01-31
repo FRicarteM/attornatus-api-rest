@@ -1,8 +1,12 @@
 package com.attornatus.attornatus_assessment.mapper;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.attornatus.attornatus_assessment.controllers.PersonAddressController;
 import com.attornatus.attornatus_assessment.data.vo.v1.AddressVo;
 import com.attornatus.attornatus_assessment.model.Address;
 
@@ -37,6 +41,23 @@ public class AddressMapper {
         		.city(address.getCity())
         		.mainAddress(address.getMainAddress())
         		.build();		
+		return addressVo;
+	}
+
+	public static AddressVo entityToVoWithHateoas(Address address) {
+		
+		AddressVo addressVo = AddressVo.builder()
+				.key(address.getId())
+				.cep(address.getCep())
+				.street(address.getStreet())
+				.number(address.getNumber())
+				.city(address.getCity())
+				.mainAddress(address.getMainAddress())
+				.build();	
+		
+		addressVo.add(linkTo(methodOn(PersonAddressController.class).findAllPerson()).withRel("Get all People")
+				.withType("GET-ALL").withName("Find All People"));
+		
 		return addressVo;
 	}
 	

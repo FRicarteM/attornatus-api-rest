@@ -7,6 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,8 @@ public class AddressVo extends RepresentationModel<AddressVo> implements Seriali
 	private static final long serialVersionUID = 6640860057726667460L;
 	@JsonProperty(value = "id")
 	private Long key;
-	
+	@Pattern(regexp = "([0-9]{5}-[0-9]{3})",
+			message = "The postal code is out of standard")
 	private String cep;
 	
 	private String street;

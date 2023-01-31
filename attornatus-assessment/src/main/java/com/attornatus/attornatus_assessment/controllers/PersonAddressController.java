@@ -1,11 +1,11 @@
 package com.attornatus.attornatus_assessment.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,6 +19,8 @@ import com.attornatus.attornatus_assessment.data.vo.v1.PersonVo;
 import com.attornatus.attornatus_assessment.services.AddressService;
 import com.attornatus.attornatus_assessment.services.PersonService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/person-address/v1")
 public class PersonAddressController {
@@ -31,31 +33,31 @@ public class PersonAddressController {
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/create")
-	public void create(@RequestBody PersonVo personVo) {
+	public void create(@RequestBody @Valid PersonVo personVo) {
 		personService.save(personVo);
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/insert-new-address/{cpf}")
-	public void insertNewAddress(@PathVariable(value = "cpf") String cpf, @RequestBody AddressVo addressVo) {
+	public void insertNewAddress(@PathVariable(value = "cpf") String cpf, @RequestBody @Valid AddressVo addressVo) {
 		personService.insertNewAddress(cpf, addressVo);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/update-person")
-	public void update (@RequestBody PersonVo personVo) {
+	public void update (@RequestBody @Valid PersonVo personVo) {
 		personService.updatePerson(personVo);
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@PutMapping("/update-person-address")
-	public void updatePersonAddress (@RequestBody PersonVo personVo) {
+	@PatchMapping("/update-person-address")
+	public void updatePersonAddress (@RequestBody @Valid PersonVo personVo) {
 			personService.update(personVo);
 	}
 
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/update-address")
-	public void updateAddress (@RequestBody AddressVo addressVo) {
+	public void updateAddress (@RequestBody @Valid AddressVo addressVo) {
 		addressService.update(addressVo);
 	}
 
@@ -79,13 +81,13 @@ public class PersonAddressController {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/find-person")
-	public List<PersonVo> findAllPerson() {
+	public CollectionModel<PersonVo> findAllPerson() {
 		return personService.findAll();
 	}
 
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/find-address")
-	public List<AddressVo> findAllAddress() {
+	public CollectionModel<AddressVo> findAllAddress() {
 		return addressService.findAll();
 	}
 	

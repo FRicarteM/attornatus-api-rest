@@ -1,13 +1,16 @@
 package com.attornatus.attornatus_assessment.services;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import com.attornatus.attornatus_assessment.controllers.PersonAddressController;
 import com.attornatus.attornatus_assessment.data.vo.v1.AddressVo;
 import com.attornatus.attornatus_assessment.exceptions.BadRequestException;
 import com.attornatus.attornatus_assessment.mapper.AddressMapper;
@@ -42,17 +45,21 @@ public class AddressService {
 		 return address;
 	}
 	
-	public List<AddressVo> findAll(){
+	public CollectionModel<AddressVo> findAll(){
 		log.info("Find Addresses");
-		List<AddressVo> addresses = new ArrayList<>();
+		CollectionModel<AddressVo> addresses = null;
 		try {
-			addresses = repository.findAll()
+			addresses = CollectionModel.of(repository.findAll()
 				.stream()
-				.map(AddressMapper::entityToVo)
-				.collect(Collectors.toList());
+				.map(AddressMapper::entityToVoWithHateoas)
+				.collect(Collectors.toList()));
 		} catch (BadRequestException bre) {
 			bre = new BadRequestException("Something wrong happened with your request");
 		}
+		
+		addresses.add(linkTo(methodOn(PersonAddressController.class).findAllAddress()).withSelfRel()
+				.withType("GET-ALL").withName("Find All Addresses"));
+		
 		return addresses;
 	}
 	
@@ -86,15 +93,6 @@ public class AddressService {
 		}catch (BadRequestException bre) {
 			bre = new BadRequestException("Something wrong happened with your request");
 		}
-//		try {
-//			if(address.getMainAddress() == true) {
-//				repository.mainAddressDisable(address.getKey());
-//			} if(address.getMainAddress() != true ) {
-//				repository.mainAddressEnable(address.getKey());
-//			}
-//		} catch (BadRequestException bre) {
-//			bre = new BadRequestException("Something wrong happened with your request");
-//		}
 	}
 	
 	public void enableMainAddress(Long id) {
