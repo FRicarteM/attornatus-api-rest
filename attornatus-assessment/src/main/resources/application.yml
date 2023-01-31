@@ -1,5 +1,5 @@
 cors:
-  originPattenrs: http://localhost:8080
+  originPattenrs: http://localhost:3000,http://localhost:8080
 spring:
   datasource:
     url: jdbc:h2:mem:management_person;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE
