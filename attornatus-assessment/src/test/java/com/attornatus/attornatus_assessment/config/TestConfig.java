@@ -1,4 +1,4 @@
-package com.attornatus.avaliacao_attornatus.config;
+package com.attornatus.attornatus_assessment.config;
 
 public class TestConfig {
 

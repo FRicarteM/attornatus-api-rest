@@ -1,4 +1,4 @@
-package com.attornatus.avaliacao_attornatus;
+package com.attornatus.attornatus_assessment;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

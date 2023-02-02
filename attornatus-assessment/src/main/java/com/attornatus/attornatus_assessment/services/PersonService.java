@@ -57,7 +57,7 @@ public class PersonService {
 		person.add(linkTo(methodOn(PersonAddressController.class).findAllPerson()).withRel("Get all People")
 				.withType("GET-ALL").withName("Find All People"));
 		person.add(linkTo(methodOn(PersonAddressController.class).findAllAddress()).withRel("Get all Address")
-				.withType("GET-ALL").withName("Find Akk Addresses"));
+				.withType("GET-ALL").withName("Find All Addresses"));
 		
 		return person;
 	}
@@ -83,8 +83,7 @@ public class PersonService {
 		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findAllPerson()).withRel("Get all People")
 				.withType("GET-ALL").withName("Find All People"));
 		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findAllAddress()).withRel("Get all Address")
-				.withType("GET-ALL").withName("Find Akk Addresses"));
-		
+				.withType("GET-ALL").withName("Find All Addresses"));
 		return mainAddress;
 	}
 	
