@@ -1,7 +1,0 @@
-com\attornatus\attornatus_assessment\unittests\mocks\MockAddress.class
-com\attornatus\attornatus_assessment\unittests\mocks\MockPerson.class
-com\attornatus\attornatus_assessment\AttornatusAssessmentApplicationTests.class
-com\attornatus\attornatus_assessment\unittests\mockito\services\AddressServiceTest.class
-com\attornatus\attornatus_assessment\unittests\mapper\VoMapperAddressTeste.class
-com\attornatus\attornatus_assessment\unittests\mapper\VoMapperPersonTeste.class
-com\attornatus\attornatus_assessment\unittests\mockito\services\PersonServiceTest.class
