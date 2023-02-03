@@ -15,7 +15,7 @@
 	<description>Projeto direcionado ao desenvolvimento back-end de API&apos;s, com a Linguagem Java, Framework Spring Boot, dentro do modelo arquitetural REST.</description>
 	<properties>
 		<java.version>19</java.version>
-		<openapi.version>1.6.14</openapi.version>
+		<springdoc.version>2.0.2</springdoc.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -25,6 +25,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-hateoas</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -38,7 +43,6 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -46,10 +50,10 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-      		<groupId>org.springdoc</groupId>
-      		<artifactId>springdoc-openapi-ui</artifactId>
-      		<version>${openapi.version}</version>
-   		</dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -63,6 +67,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
