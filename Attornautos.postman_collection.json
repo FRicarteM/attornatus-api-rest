@@ -1,0 +1,398 @@
+{
+	"info": {
+		"_postman_id": "88d76783-369c-4eb5-9202-cb3e777a551b",
+		"name": "Attornautos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17465096"
+	},
+	"item": [
+		{
+			"name": "Person",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/find-person",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"find-person"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetByCpf",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/find/111.222.333-01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"find",
+										"111.222.333-01"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"item": [
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/delete-person/111.222.333-01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"delete-person",
+										"111.222.333-01"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create",
+					"item": [
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Person 4\",\r\n    \"cpf\": \"111.222.666-08\",\r\n    \"date_birth\": \"2000-12-15\",\r\n    \"addresses\": [\r\n            {\r\n        \"cep\": \"06000-777\",\r\n        \"street\": \"street 10\",\r\n        \"number\": 222,\r\n        \"city\": \"São Paulo\",\r\n        \"mainAddress\": true\r\n            },\r\n                        {\r\n        \"cep\": \"60555-999\",\r\n        \"street\": \"street 890\",\r\n        \"number\": 7640,\r\n        \"city\": \"BH\",\r\n        \"mainAddress\": false            }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert new address",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"cep\": \"06999-000\",\r\n   \"street\": \"street 1110\",\r\n   \"number\": 5000,\r\n   \"city\": \"Acre\",\r\n   \"mainAddress\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/insert-new-address/111.222.333-00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"insert-new-address",
+										"111.222.333-00"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"item": [
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"Alfred\",\r\n    \"cpf\": \"111.777.666-08\",\r\n    \"date_birth\": \"1990-12-15\",\r\n    \"addresses\": [\r\n            {\r\n        \"id\": 3,\r\n        \"cep\": \"06667-777\",\r\n        \"street\": \"street 110\",\r\n        \"number\": 2,\r\n        \"city\": \"Curitíba\",\r\n        \"mainAddress\": true\r\n            }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/update-person-address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"update-person-address"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update-person",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"Alfred\",\r\n    \"cpf\": \"111.777.666-08\",\r\n    \"date_birth\": \"1990-12-15\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/update-person",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"update-person"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Main Address",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"Alfred\",\r\n    \"cpf\": \"111.777.666-08\",\r\n    \"date_birth\": \"1990-12-15\",\r\n    \"addresses\": [\r\n            {\r\n        \"id\": 3,\r\n        \"cep\": \"06667-777\",\r\n        \"street\": \"street 110\",\r\n        \"number\": 2,\r\n        \"city\": \"Curitíba\",\r\n        \"mainAddress\": true\r\n            }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/update-main-address/111.222.333-01/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"update-main-address",
+										"111.222.333-01",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "GetAll",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/find-address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"find-address"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMainAddress",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/find-main-address/111.222.333-01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"find-main-address",
+										"111.222.333-01"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"item": [
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/delete-address/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"delete-address",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"item": [
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 3,\r\n    \"cep\": \"06667-777\",\r\n    \"street\": \"street 110\",\r\n    \"number\": 2,\r\n    \"city\": \"Curitíba\",\r\n    \"mainAddress\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/person-address/v1/update-address",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"person-address",
+										"v1",
+										"update-address"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
