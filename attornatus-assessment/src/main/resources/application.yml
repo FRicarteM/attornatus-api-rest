@@ -12,8 +12,8 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
-        show-sql: true
         format-sql: true
+    show-sql: true
 springdoc:
   pathsToMatch: /api/**/v1/**
   swagger-ui:
