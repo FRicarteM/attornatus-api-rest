@@ -98,7 +98,7 @@ public class PersonAddressController {
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@PatchMapping("/update-person-address")
+	@PutMapping("/update-person-address")
 	@Operation(summary = "Update a Registration",
 	description = "Update a registration for a person and your address",
 	tags = {"Update a Registration"},
@@ -140,7 +140,7 @@ public class PersonAddressController {
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@PutMapping("/update-main-address/{cpf}/{id}")
+	@PatchMapping("/update-main-address/{cpf}/{id}")
 	@Operation(summary = "Update a specific field",
 	description = "Update specific field, main Address",
 	tags = {"Update a Registration"},
