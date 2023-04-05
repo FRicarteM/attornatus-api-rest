@@ -4,11 +4,20 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import com.attornatus.attornatus_assessment.controllers.PersonAddressController;
@@ -33,6 +42,9 @@ public class PersonService {
 	@Autowired
 	AddressService service;
 	
+	@Autowired
+	PagedResourcesAssembler<PersonVo> assembler;
+	
 	public PersonVo findById(Long id) {
 		log.info("Find for a Person");
 		return PersonMapper.entityToVo(repository.findById(id)
@@ -54,9 +66,9 @@ public class PersonService {
 				.withType("GET-BY").withName("Find By CPF"));
 		person.add(linkTo(methodOn(PersonAddressController.class).findMainAddressByPerson(cpf))
 				.withRel("Get Main Address").withType("GET-BY").withName("Find the Main Address of a Person"));
-		person.add(linkTo(methodOn(PersonAddressController.class).findAllPerson()).withRel("Get all People")
+		person.add(linkTo(methodOn(PersonAddressController.class).findAllPerson(0)).withRel("Get all People")
 				.withType("GET-ALL").withName("Find All People"));
-		person.add(linkTo(methodOn(PersonAddressController.class).findAllAddress()).withRel("Get all Address")
+		person.add(linkTo(methodOn(PersonAddressController.class).findAllAddress(0)).withRel("Get all Address")
 				.withType("GET-ALL").withName("Find All Addresses"));
 		
 		return person;
@@ -80,29 +92,31 @@ public class PersonService {
 				.withType("GET-BY").withName("Find the Main Address of a Person"));
 		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findByCpf(cpf)).withRel("Get a Person by CPF")
 				.withType("GET-BY").withName("Find By CPF"));
-		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findAllPerson()).withRel("Get all People")
+		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findAllPerson(0)).withRel("Get all People")
 				.withType("GET-ALL").withName("Find All People"));
-		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findAllAddress()).withRel("Get all Address")
+		mainAddress.add(linkTo(methodOn(PersonAddressController.class).findAllAddress(0)).withRel("Get all Address")
 				.withType("GET-ALL").withName("Find All Addresses"));
 		return mainAddress;
 	}
-	
-	public CollectionModel<PersonVo> findAll() {
+
+	public PagedModel<EntityModel<PersonVo>> findAll(Integer page) {
 		log.info("Find People");
-		CollectionModel<PersonVo> people = null; 
+		List<PersonVo> people = new ArrayList<>(); 
+		Pageable pageable = PageRequest.of(page, 2, Sort.by("cpf").ascending());
 		try {
-			people = CollectionModel.of((repository.findAll()
+			people = (repository.findAll(pageable)
 				.stream()
 				.map(PersonMapper::entityToVoWithHateoas)
-				.collect(Collectors.toList())));
+				.collect(Collectors.toList()));
 		} catch (BadRequestException bre) {
 			bre = new BadRequestException("Something wrong happened with your request");
 		}		
 		
-		people.add(linkTo(methodOn(PersonAddressController.class).findAllPerson()).withSelfRel()
-				.withType("GET-ALL").withName("Find All People"));
+		Page<PersonVo> pagePeople = new PageImpl<>(people, pageable, people.size());
+		Link link = linkTo(methodOn(PersonAddressController.class).findAllPerson(page)).withSelfRel()
+				.withType("GET-ALL").withName("Find All People");
 		
-		return people;
+		return assembler.toModel(pagePeople, link);
 	}
 	
 	public void save(PersonVo personVo) {

@@ -55,7 +55,7 @@ public class AddressMapper {
 				.mainAddress(address.getMainAddress())
 				.build();	
 		
-		addressVo.add(linkTo(methodOn(PersonAddressController.class).findAllPerson()).withRel("Get all People")
+		addressVo.add(linkTo(methodOn(PersonAddressController.class).findAllPerson(0)).withRel("Get all People")
 				.withType("GET-ALL").withName("Find All People"));
 		
 		return addressVo;

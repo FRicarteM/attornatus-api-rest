@@ -50,7 +50,7 @@ public class PersonMapper {
 				.withType("GET-BY").withName("Find By CPF"));
 		personVo.add(linkTo(methodOn(PersonAddressController.class).findMainAddressByPerson(personVo.getCpf()))
 				.withRel("Get Main Address").withType("GET-BY").withName("Find the Main Address of a Person"));
-		personVo.add(linkTo(methodOn(PersonAddressController.class).findAllAddress()).withRel("Get all Address")
+		personVo.add(linkTo(methodOn(PersonAddressController.class).findAllAddress(0)).withRel("Get all Address")
 				.withType("GET-ALL").withName("Find All Addresses"));
 		
 		return personVo;

@@ -1,7 +1,8 @@
 package com.attornatus.attornatus_assessment.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -219,8 +221,9 @@ public class PersonAddressController {
 			@ApiResponse(description = "Internal Error", responseCode = "500", content = {@Content(
 					mediaType = "application/json", array = @ArraySchema(
 							schema = @Schema(implementation = ExceptionResponse.class)))})})
-	public CollectionModel<PersonVo> findAllPerson() {
-		return personService.findAll();
+	public PagedModel<EntityModel<PersonVo>> findAllPerson(
+			@RequestParam(value = "page", defaultValue = "0") Integer page) {
+		return personService.findAll(page);
 	}
 
 	@ResponseStatus(HttpStatus.OK)
@@ -240,8 +243,9 @@ public class PersonAddressController {
 			@ApiResponse(description = "Internal Error", responseCode = "500", content = {@Content(
 					mediaType = "application/json", array = @ArraySchema(
 							schema = @Schema(implementation = ExceptionResponse.class)))})})
-	public CollectionModel<AddressVo> findAllAddress() {
-		return addressService.findAll();
+	public PagedModel<EntityModel<AddressVo>> findAllAddress(
+			@RequestParam(value = "page", defaultValue = "0") Integer page) {
+		return addressService.findAll(page);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)

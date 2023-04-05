@@ -3,10 +3,20 @@ package com.attornatus.attornatus_assessment.services;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -24,6 +34,9 @@ public class AddressService {
 	
 	@Autowired
 	AddressRepository repository;
+
+	@Autowired
+	PagedResourcesAssembler<AddressVo> assembler;
 	
 	public AddressVo findById(Long id){
 		log.info("Find for a Address");
@@ -45,22 +58,24 @@ public class AddressService {
 		 return address;
 	}
 	
-	public CollectionModel<AddressVo> findAll(){
+	public PagedModel<EntityModel<AddressVo>> findAll(Integer page){
 		log.info("Find Addresses");
-		CollectionModel<AddressVo> addresses = null;
+		List<AddressVo> addresses = new ArrayList<>();
+		Pageable pageable = PageRequest.of(page, 2, Sort.by("number").ascending());
 		try {
-			addresses = CollectionModel.of(repository.findAll()
+			addresses = repository.findAll(pageable)
 				.stream()
 				.map(AddressMapper::entityToVoWithHateoas)
-				.collect(Collectors.toList()));
+				.collect(Collectors.toList());
 		} catch (BadRequestException bre) {
 			bre = new BadRequestException("Something wrong happened with your request");
 		}
 		
-		addresses.add(linkTo(methodOn(PersonAddressController.class).findAllAddress()).withSelfRel()
-				.withType("GET-ALL").withName("Find All Addresses"));
-		
-		return addresses;
+		Page<AddressVo> pageAddress = new PageImpl<>(addresses, pageable, addresses.size());
+		Link link = linkTo(methodOn(PersonAddressController.class).findAllAddress(page)).withSelfRel()
+				.withType("GET-ALL").withName("Find All Addresses");
+				
+		return assembler.toModel(pageAddress, link);
 	}
 	
 	public AddressVo save(AddressVo addressVo) {

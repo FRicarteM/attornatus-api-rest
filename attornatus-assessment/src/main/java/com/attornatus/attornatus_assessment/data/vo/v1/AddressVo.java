@@ -3,6 +3,7 @@ package com.attornatus.attornatus_assessment.data.vo.v1;
 import java.io.Serializable;
 
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -15,6 +16,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@Relation(collectionRelation = "List of Addresses")
 @Data
 @Builder
 @AllArgsConstructor
