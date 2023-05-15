@@ -81,11 +81,10 @@ class PersonServiceTest {
 		assertNotNull(response.getCpf());
 		assertNotNull(response.getDateBirth());
 		assertNotNull(response.getAddresses());
-		
 		assertTrue(response.getLinks().toString().contains("</api/person-address/v1/find/000.000.000-01>;rel=\"self\";type=\"GET-BY\";name=\"Find By CPF\","
 				+ "</api/person-address/v1/find-main-address/000.000.000-01>;rel=\"Get Main Address\";type=\"GET-BY\";name=\"Find the Main Address of a Person\","
-				+ "</api/person-address/v1/find-person>;rel=\"Get all People\";type=\"GET-ALL\";name=\"Find All People\","
-				+ "</api/person-address/v1/find-address>;rel=\"Get all Address\";type=\"GET-ALL\";name=\"Find All Addresses\""));
+				+ "</api/person-address/v1/find-person?page=0>;rel=\"Get all People\";type=\"GET-ALL\";name=\"Find All People\","
+				+ "</api/person-address/v1/find-address?page=0>;rel=\"Get all Address\";type=\"GET-ALL\";name=\"Find All Addresses\""));
 		
 	    assertEquals("Person1", response.getName());
 	    assertEquals("000.000.000-01", response.getCpf());
