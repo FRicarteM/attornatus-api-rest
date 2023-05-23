@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  db:
+    container_name: h2_container
+    image: oscarfonts/h2:latest
+    restart: always
+    environment:
+      - H2_USER=sa
+      - H2_PASSWORD= 
+    networks:
+      - attornatus-network
+  attornatus-assessment:
+    container_name: attornatus-assessment
+    image: fricarte/attornatus-assessment
+    restart: always
+    build: ./
+    working_dir: /attornatus-assessment
+    environment:
+      SPRING.DATASOURCE.URL: jdbc:h2:mem:management_person;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE
+      SPRING.DATASOURCE.USERNAME: sa
+      SPRING.DATASOURCE.PASSWORD: 
+    ports:
+      - 80:80
+    command: mvn spring-boot:run
+    depends_on:
+      - db
+    networks:
+      - attornatus-network
+networks:
+  attornatus-network:
+    driver: bridge
