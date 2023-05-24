@@ -1,5 +1,5 @@
 # Attornatus API REST
-[![Docker Hub Repo](https://img.shields.io/docker/pulls/fricarte/attornatus-assessment.svg)](https://hub.docker.com/repository/docker/fricarte/attornatus-assessment)
+[![Docker Hub Repo](https://img.shields.io/docker/pulls/${{ secrets.DOCKER_USERNAME }}/attornatus-assessment.svg)](https://hub.docker.com/repository/docker/${{ secrets.DOCKER_USERNAME }}/attornatus-assessment)
 
 Resposta das Questões:
 
