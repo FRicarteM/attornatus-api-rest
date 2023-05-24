@@ -28,11 +28,11 @@ jobs:
         cache: maven
         
     - name: Build Application Jar
-      working-directory: ./
+      working-directory: ./attornatus-api-rest
       run: mvn clean package
       
     - name: Docker Compose Build
-      working-directory: ./
+      working-directory: ./attornatus-api-rest
       run: docker compose build
     
     - name: Push to DockerHub
